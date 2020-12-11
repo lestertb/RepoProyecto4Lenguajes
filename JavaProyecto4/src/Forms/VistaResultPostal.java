@@ -15,9 +15,11 @@ import javax.swing.*;
  */
 public class VistaResultPostal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VistaResultPostal
-     */
+    //Globals
+    
+    public static String auxPath;
+    
+    
     public VistaResultPostal() {
         initComponents();
         for (createdImg x : VistaCrearPostal.resultsImg) {
@@ -199,23 +201,9 @@ public class VistaResultPostal extends javax.swing.JFrame {
                 jlab2.setIcon(new ImageIcon(newimg2));
                 jlab2.setHorizontalAlignment(JLabel.CENTER);
                 jScrollPane2.getViewport().add(jlab2);
+                auxPath = x.pathDireccionImgResult;
             }
         }
-        
-        JFileChooser jfc = new JFileChooser();
-        /*
-        if (jfc.showOpenDialog(jComboBox1) == JFileChooser.APPROVE_OPTION) {
-            
-            java.io.File f = jfc.getSelectedFile();
-
-            System.out.println("Pinga: "+ f.toString());
-            //jlab1.setIcon(new ImageIcon(f.toString()));
-            //jlab1.setIcon(new ImageIcon(x.pathDireccionImgOriginal));
-            //jlab1.setHorizontalAlignment(JLabel.CENTER);
-            //jScrollPane1.getViewport().add(jlab1);
-        }
-        */
-    
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -225,7 +213,9 @@ public class VistaResultPostal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        VistaPlugins vistaPlugin = new VistaPlugins();
+        JOptionPane.showMessageDialog(rootPane, "Nota: Los plugins serán "
+                + "aplicados a la última imagen selecionada en esta ventana");
+        VistaPlugins vistaPlugin = new VistaPlugins(auxPath);
         vistaPlugin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed

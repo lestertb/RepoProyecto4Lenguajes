@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
  */
 public class JavaClassLoader extends ClassLoader {
 	
-	public void invokeClassMethod(String classBinName, String methodName){
+	public void invokeClassMethod(String classBinName, String methodName, String methodValue){
 		
 		try {
 			
@@ -26,9 +26,9 @@ public class JavaClassLoader extends ClassLoader {
 	        Object myClassObject = constructor.newInstance();
 	        
 	        // Getting the target method from the loaded class and invoke it using its name
-	        Method method = loadedMyClass.getMethod(methodName);
+	        Method method = loadedMyClass.getMethod(methodName, String.class);
 	        System.out.println("Invoked method name: " + method.getName());
-	        method.invoke(myClassObject);
+	        method.invoke(myClassObject,methodValue);
 
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
