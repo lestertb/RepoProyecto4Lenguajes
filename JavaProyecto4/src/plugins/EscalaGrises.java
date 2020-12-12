@@ -6,10 +6,12 @@ package plugins;
  */
 
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class EscalaGrises extends javax.swing.JFrame implements Plugin{
@@ -20,8 +22,10 @@ public class EscalaGrises extends javax.swing.JFrame implements Plugin{
     public EscalaGrises() {
         initComponents();
         mostrarEditada();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
-
+    
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -185,13 +189,22 @@ public class EscalaGrises extends javax.swing.JFrame implements Plugin{
     
     JLabel jlab1 = new JLabel();
     private void mostrarEditada(){
-        ImageIcon imageIcon = new ImageIcon(auxPath);
-        Image image = imageIcon.getImage();
-        Image newimg = image.getScaledInstance(251, 174,  java.awt.Image.SCALE_SMOOTH);
+        if (auxPath != null) {
+            File f = new File(auxPath);
+            Image image = null;
+            try {
+                image = ImageIO.read(f);
+            } catch (IOException ex) {
+                System.out.println("Error bmp");
+            }
+            ImageIcon icon = new ImageIcon(image);
+            Image imageTest = icon.getImage();
+            Image newimg = imageTest.getScaledInstance(251, 174,  java.awt.Image.SCALE_SMOOTH);
 
-        jlab1.setIcon(new ImageIcon(newimg));
-        jlab1.setHorizontalAlignment(JLabel.CENTER);
-        jScrollPane1.getViewport().add(jlab1);
+            jlab1.setIcon(new ImageIcon(newimg));
+            jlab1.setHorizontalAlignment(JLabel.CENTER);
+            jScrollPane1.getViewport().add(jlab1);
+        }
     }
         
     void escalaGrises(){
@@ -214,14 +227,14 @@ public class EscalaGrises extends javax.swing.JFrame implements Plugin{
                     image.setRGB(j,i,newColor.getRGB());
                 }
             }
-            File ouptut = new File("resultsPlugins\\result.jpg");
+            File ouptut = new File(auxPath);
             ImageIO.write(image, "jpg", ouptut);
         } catch (Exception e) {
         }  
     }
     JLabel jlab2 = new JLabel();
     void mostrarImagenGris(){
-        ImageIcon imageIcon2 = new ImageIcon("resultsPlugins\\result.jpg");
+        ImageIcon imageIcon2 = new ImageIcon(auxPath);
         Image image2 = imageIcon2.getImage();
         Image newimg2 = image2.getScaledInstance(251, 174,  java.awt.Image.SCALE_SMOOTH);
         jlab2.setIcon(new ImageIcon(newimg2));

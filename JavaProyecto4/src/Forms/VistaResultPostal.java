@@ -7,7 +7,12 @@ package Forms;
 
 import classes.*;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -47,6 +52,7 @@ public class VistaResultPostal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,34 +134,40 @@ public class VistaResultPostal extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("Propiedades Imagen");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(206, 206, 206)
+                .addComponent(jLabel1)
+                .addGap(40, 256, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(206, 206, 206)
-                        .addComponent(jLabel1))
+                        .addComponent(jButton1)
+                        .addGap(128, 128, 128)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(27, 27, 27))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(40, 40, 40))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(17, 17, 17))
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(40, 40, 40))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,18 +178,24 @@ public class VistaResultPostal extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(2, 2, 2)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(76, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jButton1)
+                            .addComponent(jButton3))
+                        .addGap(17, 17, 17))))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
     //create label
@@ -187,21 +205,59 @@ public class VistaResultPostal extends javax.swing.JFrame {
         for (createdImg x : VistaCrearPostal.resultsImg) {
             if (x.nombreProjecto.equals(jComboBox1.getSelectedItem().toString())) {
                 //Original
-                ImageIcon imageIcon = new ImageIcon(x.pathDireccionImgOriginal);
-                Image image = imageIcon.getImage();
-                Image newimg = image.getScaledInstance(251, 174,  java.awt.Image.SCALE_SMOOTH);
+                String[] result= (x.pathDireccionImgOriginal).split("\\.");
+                if (result[1].equals("bmp")) {
+                    File f = new File(x.pathDireccionImgOriginal);
+                    Image image = null;
+                    try {
+                        image = ImageIO.read(f);
+                    } catch (IOException ex) {
+                        System.out.println("Error bmp");
+                    }
+                    ImageIcon icon = new ImageIcon(image);
+                    Image imageTest = icon.getImage();
+                    Image newimg = imageTest.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
 
-                jlab1.setIcon(new ImageIcon(newimg));
-                jlab1.setHorizontalAlignment(JLabel.CENTER);
-                jScrollPane1.getViewport().add(jlab1);
+                    jlab1.setIcon(new ImageIcon(newimg));
+                    jlab1.setHorizontalAlignment(JLabel.CENTER);
+                    jScrollPane1.getViewport().add(jlab1);
+                }else{
+                    ImageIcon imageIcon = new ImageIcon(x.pathDireccionImgOriginal);
+                    Image image = imageIcon.getImage();
+                    Image newimg = image.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
+
+                    jlab1.setIcon(new ImageIcon(newimg));
+                    jlab1.setHorizontalAlignment(JLabel.CENTER);
+                    jScrollPane1.getViewport().add(jlab1);
+                }               
                 //Result
-                ImageIcon imageIcon2 = new ImageIcon(x.pathDireccionImgResult);
-                Image image2 = imageIcon2.getImage();
-                Image newimg2 = image2.getScaledInstance(251, 174,  java.awt.Image.SCALE_SMOOTH);
-                jlab2.setIcon(new ImageIcon(newimg2));
-                jlab2.setHorizontalAlignment(JLabel.CENTER);
-                jScrollPane2.getViewport().add(jlab2);
-                auxPath = x.pathDireccionImgResult;
+                String[] result2= (x.pathDireccionImgResult).split("\\.");
+                if (result2[1].equals("bmp")) {
+                    File f = new File(x.pathDireccionImgResult);
+                    Image image = null;
+                    try {
+                        image = ImageIO.read(f);
+                    } catch (IOException ex) {
+                        System.out.println("Error bmp");
+                    }
+                    ImageIcon icon = new ImageIcon(image);
+                    Image imageTest = icon.getImage();
+                    Image newimg = imageTest.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
+
+                    jlab2.setIcon(new ImageIcon(newimg));
+                    jlab2.setHorizontalAlignment(JLabel.CENTER);
+                    jScrollPane2.getViewport().add(jlab2);
+                    auxPath = x.pathDireccionImgResult;
+                }else{
+                    ImageIcon imageIcon = new ImageIcon(x.pathDireccionImgResult);
+                    Image image = imageIcon.getImage();
+                    Image newimg = image.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
+
+                    jlab2.setIcon(new ImageIcon(newimg));
+                    jlab2.setHorizontalAlignment(JLabel.CENTER);
+                    jScrollPane2.getViewport().add(jlab2);
+                    auxPath = x.pathDireccionImgResult;
+                }       
             }
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -219,6 +275,12 @@ public class VistaResultPostal extends javax.swing.JFrame {
         vistaPlugin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        VistaPropiedades vistaPropiedades = new VistaPropiedades(auxPath);
+        vistaPropiedades.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,6 +320,7 @@ public class VistaResultPostal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

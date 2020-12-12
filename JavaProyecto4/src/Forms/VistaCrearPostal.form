@@ -245,7 +245,7 @@
               <StringArray count="3">
                 <StringItem index="0" value="JPG"/>
                 <StringItem index="1" value="PNG"/>
-                <StringItem index="2" value="BIMP"/>
+                <StringItem index="2" value="BMP"/>
               </StringArray>
             </Property>
           </Properties>

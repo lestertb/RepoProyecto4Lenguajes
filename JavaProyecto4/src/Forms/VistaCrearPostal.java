@@ -70,7 +70,7 @@ public class VistaCrearPostal extends javax.swing.JFrame {
 
         jLabel7.setText("Formato de la postal");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "JPG", "PNG", "BIMP" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "JPG", "PNG", "BMP" }));
 
         jLabel8.setText("Ubicación Imagen");
 
@@ -234,6 +234,7 @@ public class VistaCrearPostal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Imagen generada correctamente en la carpeta ImgResults del proyecto");
         }else
             JOptionPane.showMessageDialog(rootPane, "No se pudo generar la imagen");
+        limpiarCampos();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -294,7 +295,7 @@ public class VistaCrearPostal extends javax.swing.JFrame {
         if ("3".equals(jComboBox1.getSelectedItem().toString())) {
              tipoLetra = "back-end\\The Loccosta FREE.ttf";
          }
-
+        
         String tamannoLetra = jComboBox2.getSelectedItem().toString();
         String extensionPostal = "";
         if ("JPG".equals(jComboBox3.getSelectedItem().toString())) {
@@ -314,7 +315,7 @@ public class VistaCrearPostal extends javax.swing.JFrame {
             Process p=Runtime.getRuntime().exec ("back-end\\"
                     + "Proyecto1Lenguajes.exe"+" \""+ubicacionImagen+
                     "\" "+extensionPostal+" "+nombrePostal+" "+
-                    textoArriba+" "+textAbajo+" "+tipoLetra+" "+tamannoLetra + " "+ ubicacionResult);
+                    textoArriba+" "+textAbajo+" "+ "\""+tipoLetra+"\"" +" "+tamannoLetra + " "+ ubicacionResult);
             
             InputStream is = p.getInputStream();
             
@@ -337,6 +338,16 @@ public class VistaCrearPostal extends javax.swing.JFrame {
         createdImg newImg = new createdImg(nombrePostal, ubicacionImagen, testPathResult);
         resultsImg.add(newImg);
         return true;
+    }
+    
+    void limpiarCampos(){
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jComboBox1.setSelectedIndex(0);
+        jComboBox2.setSelectedIndex(0);
+        jComboBox3.setSelectedIndex(0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
