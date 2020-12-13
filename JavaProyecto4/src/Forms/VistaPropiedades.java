@@ -5,22 +5,16 @@
  */
 package Forms;
 
-import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -35,10 +29,11 @@ public class VistaPropiedades extends javax.swing.JFrame {
     /**
      * Creates new form VistaPropiedades
      */
-     public static String auxPath;
-     
-     
     
+    //Globals
+    public static String auxPath;
+    DefaultListModel listModel = new DefaultListModel();
+     
     public VistaPropiedades(String arg) {
         initComponents();
         auxPath = arg;
@@ -155,14 +150,19 @@ public class VistaPropiedades extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //Botones
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //Llama a vistaPostal
         VistaResultPostal vr = new VistaResultPostal();
         vr.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    //Botón que corre la función para mosstrar las propiedades de la imagen
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         propiedadesImagen();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -170,6 +170,7 @@ public class VistaPropiedades extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    //Main
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -201,9 +202,10 @@ public class VistaPropiedades extends javax.swing.JFrame {
             }
         });
     }
-    
+    //Crear Label
     JLabel jlab1 = new JLabel();
-    void cargarImagen(){
+    //Método que carga la imagen
+    private void cargarImagen(){
         File f = new File(auxPath);
         Image image = null;
         try {
@@ -220,20 +222,37 @@ public class VistaPropiedades extends javax.swing.JFrame {
         jScrollPane1.getViewport().add(jlab1);
     }
     
-    DefaultListModel listModel = new DefaultListModel();
-
-    void propiedadesImagen(){
-       
+    //Método que muestra las propiedades de la imagen
+    private void propiedadesImagen(){
+        //Se le agrega el modelo global al jList
         jList1.setModel(listModel);
-        
+        //Se inicia con la carga del archivo y se obtiene algunos datos para mostrar como propiedades
+        //de la imagen en el jList
         try {
             File f;
             BufferedImage simg; 
             f = new File(auxPath); 
-            simg = ImageIO.read(f); 
+            simg = ImageIO.read(f);
+            listModel.addElement("Nombre: " + f.getName());
+            String[] result1 = (f.getName()).split("\\.");
+            listModel.addElement("Tipo de archivo: " + "Archivo "+  result1[1].toUpperCase());
+            listModel.addElement("Ubicación: " + f.getAbsolutePath());
+            listModel.addElement("Tamaño: " + (f.length()/1023) + "KB");
             listModel.addElement("Width: " + simg.getWidth());
             listModel.addElement("Height: " + simg.getHeight());
+            BasicFileAttributes attrs;
+            attrs = Files.readAttributes(f.toPath(), BasicFileAttributes.class);
+            FileTime time = attrs.creationTime();
+            String pattern = "dd-MM-yyyy HH:mm:ss";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String formatted = simpleDateFormat.format( new Date( time.toMillis() ) );
+            listModel.addElement("Fecha de creación: " + formatted);  
+            String[] result2;
+            result2 = (simg.getGraphics().getColor().toString()).split("r");
+            listModel.addElement("RGB: " + result2[1]+ result2[2]);
+            
         } catch (Exception e) {
+            System.out.println("error");
         }
         
     }

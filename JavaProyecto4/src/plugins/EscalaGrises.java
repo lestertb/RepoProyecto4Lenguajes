@@ -6,7 +6,6 @@ package plugins;
  */
 
 import java.awt.*;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
@@ -152,7 +151,7 @@ public class EscalaGrises extends javax.swing.JFrame implements Plugin{
         mostrarImagenGris();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-
+    //Método que requiere la implementación del interface y a la vez levanta la interfaz gráfica para hacer uso del plugin
     @Override
     public void loadFile(String path) {
         auxPath = path;
@@ -186,8 +185,9 @@ public class EscalaGrises extends javax.swing.JFrame implements Plugin{
             }
         });        
     }
-    
+    //Crear Label
     JLabel jlab1 = new JLabel();
+    //Método que muestra la imagen a la que se le va aplicar el plugin
     private void mostrarEditada(){
         if (auxPath != null) {
             File f = new File(auxPath);
@@ -206,8 +206,8 @@ public class EscalaGrises extends javax.swing.JFrame implements Plugin{
             jScrollPane1.getViewport().add(jlab1);
         }
     }
-        
-    void escalaGrises(){
+    //Método que le aplica la escala de grises a la imagen
+    private void escalaGrises(){
        BufferedImage image;
        int width;
        int height;  
@@ -232,8 +232,10 @@ public class EscalaGrises extends javax.swing.JFrame implements Plugin{
         } catch (Exception e) {
         }  
     }
+    //Crear label
     JLabel jlab2 = new JLabel();
-    void mostrarImagenGris(){
+    //Métedo que muestra el resultado de la imagen después de aplicar la escala a grises
+    private void mostrarImagenGris(){
         ImageIcon imageIcon2 = new ImageIcon(auxPath);
         Image image2 = imageIcon2.getImage();
         Image newimg2 = image2.getScaledInstance(251, 174,  java.awt.Image.SCALE_SMOOTH);

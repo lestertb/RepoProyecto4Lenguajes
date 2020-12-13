@@ -16,7 +16,9 @@ public class main {
     /**
      * @param args the command line arguments
      */
+    //Main que carga el Menú para iniciar con el uso del sistema
     public static void main(String[] args) {
+        //Llamar al main
         MainFrame mainFrame = new MainFrame();
         mainFrame.setVisible(true);
     }

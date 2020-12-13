@@ -4,15 +4,16 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 /**
- * @author ashraf
+ * @author Lester Trejos
  * 
  */
+//Clase para la carga dinámica de clases que hereda de ClassLoader
 public class JavaClassLoader extends ClassLoader {
-	
+    //Método que me invoca el método de una clase dinámicamente
     public void invokeClassMethod(String classBinName, String methodName, String methodValue){
 
         try {
-            // Create a new JavaClassLoader 
+            // Se crea el JavaClassLoader 
             ClassLoader classLoader = this.getClass().getClassLoader();
 
             // Load the target class using its binary name

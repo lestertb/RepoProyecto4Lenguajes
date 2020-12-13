@@ -15,7 +15,7 @@ import testLoader.JavaClassLoader;
  */
 public class VistaPlugins extends javax.swing.JFrame {
 
-   
+   //Globals
     public static String auxPath;
     
     
@@ -88,6 +88,7 @@ public class VistaPlugins extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //Evento del Combo box que carga los plugins dinámicamente de la carpeta "plugins"
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         try {
             if (jComboBox1.getSelectedIndex() > 0) {
@@ -100,7 +101,9 @@ public class VistaPlugins extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    //Botones
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //Llama a la vistaPostal
         VistaResultPostal vr = new VistaResultPostal();
         vr.setVisible(true);
         this.dispose();
@@ -109,6 +112,7 @@ public class VistaPlugins extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    //Main
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -140,7 +144,7 @@ public class VistaPlugins extends javax.swing.JFrame {
             }
         });
     }
-    
+    //Método que me obtiene los plugins dinámicamente
     private void obtenerPlugins(){
         
         String[] nombrePlugins;

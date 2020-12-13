@@ -27,6 +27,7 @@ public class VistaResultPostal extends javax.swing.JFrame {
     
     public VistaResultPostal() {
         initComponents();
+        //Se cargan las imagenes de la clase, en el comboBox
         for (createdImg x : VistaCrearPostal.resultsImg) {
             jComboBox1.addItem(x.nombreProjecto);
         }
@@ -198,77 +199,21 @@ public class VistaResultPostal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
-    //create label
-    JLabel jlab1 = new JLabel();
-    JLabel jlab2 = new JLabel();
+    //Evento del comboBox que corre el método cargarImagenes
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        for (createdImg x : VistaCrearPostal.resultsImg) {
-            if (x.nombreProjecto.equals(jComboBox1.getSelectedItem().toString())) {
-                //Original
-                String[] result= (x.pathDireccionImgOriginal).split("\\.");
-                if (result[1].equals("bmp")) {
-                    File f = new File(x.pathDireccionImgOriginal);
-                    Image image = null;
-                    try {
-                        image = ImageIO.read(f);
-                    } catch (IOException ex) {
-                        System.out.println("Error bmp");
-                    }
-                    ImageIcon icon = new ImageIcon(image);
-                    Image imageTest = icon.getImage();
-                    Image newimg = imageTest.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
-
-                    jlab1.setIcon(new ImageIcon(newimg));
-                    jlab1.setHorizontalAlignment(JLabel.CENTER);
-                    jScrollPane1.getViewport().add(jlab1);
-                }else{
-                    ImageIcon imageIcon = new ImageIcon(x.pathDireccionImgOriginal);
-                    Image image = imageIcon.getImage();
-                    Image newimg = image.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
-
-                    jlab1.setIcon(new ImageIcon(newimg));
-                    jlab1.setHorizontalAlignment(JLabel.CENTER);
-                    jScrollPane1.getViewport().add(jlab1);
-                }               
-                //Result
-                String[] result2= (x.pathDireccionImgResult).split("\\.");
-                if (result2[1].equals("bmp")) {
-                    File f = new File(x.pathDireccionImgResult);
-                    Image image = null;
-                    try {
-                        image = ImageIO.read(f);
-                    } catch (IOException ex) {
-                        System.out.println("Error bmp");
-                    }
-                    ImageIcon icon = new ImageIcon(image);
-                    Image imageTest = icon.getImage();
-                    Image newimg = imageTest.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
-
-                    jlab2.setIcon(new ImageIcon(newimg));
-                    jlab2.setHorizontalAlignment(JLabel.CENTER);
-                    jScrollPane2.getViewport().add(jlab2);
-                    auxPath = x.pathDireccionImgResult;
-                }else{
-                    ImageIcon imageIcon = new ImageIcon(x.pathDireccionImgResult);
-                    Image image = imageIcon.getImage();
-                    Image newimg = image.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
-
-                    jlab2.setIcon(new ImageIcon(newimg));
-                    jlab2.setHorizontalAlignment(JLabel.CENTER);
-                    jScrollPane2.getViewport().add(jlab2);
-                    auxPath = x.pathDireccionImgResult;
-                }       
-            }
-        }
+        cargarImagenes();
     }//GEN-LAST:event_jComboBox1ActionPerformed
+    //Botones
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //Llamar al main
         MainFrame main = new MainFrame();
         main.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //Llama a la vista plugin
         JOptionPane.showMessageDialog(rootPane, "Nota: Los plugins serán "
                 + "aplicados a la última imagen selecionada en esta ventana");
         VistaPlugins vistaPlugin = new VistaPlugins(auxPath);
@@ -277,6 +222,7 @@ public class VistaResultPostal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        //Llama a la vista de propiedades
         VistaPropiedades vistaPropiedades = new VistaPropiedades(auxPath);
         vistaPropiedades.setVisible(true);
         this.dispose();
@@ -285,6 +231,7 @@ public class VistaResultPostal extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    //Main
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -315,6 +262,71 @@ public class VistaResultPostal extends javax.swing.JFrame {
                 new VistaResultPostal().setVisible(true);
             }
         });
+    }
+    
+    //create labels
+    JLabel jlab1 = new JLabel();
+    JLabel jlab2 = new JLabel();
+    //Método que carga las imagenes(original y postal)
+    private void cargarImagenes(){
+        for (createdImg x : VistaCrearPostal.resultsImg) {
+            if (x.nombreProjecto.equals(jComboBox1.getSelectedItem().toString())) {
+                // Mostrar imagen Original
+                String[] result= (x.pathDireccionImgOriginal).split("\\.");
+                if (result[1].equals("bmp")) {
+                    File f = new File(x.pathDireccionImgOriginal);
+                    Image image = null;
+                    try {
+                        image = ImageIO.read(f);
+                    } catch (IOException ex) {
+                        System.out.println("Error bmp");
+                    }
+                    ImageIcon icon = new ImageIcon(image);
+                    Image imageTest = icon.getImage();
+                    Image newimg = imageTest.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
+
+                    jlab1.setIcon(new ImageIcon(newimg));
+                    jlab1.setHorizontalAlignment(JLabel.CENTER);
+                    jScrollPane1.getViewport().add(jlab1);
+                }else{
+                    ImageIcon imageIcon = new ImageIcon(x.pathDireccionImgOriginal);
+                    Image image = imageIcon.getImage();
+                    Image newimg = image.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
+
+                    jlab1.setIcon(new ImageIcon(newimg));
+                    jlab1.setHorizontalAlignment(JLabel.CENTER);
+                    jScrollPane1.getViewport().add(jlab1);
+                }               
+                //Mostrar Postal (Result)
+                String[] result2= (x.pathDireccionImgResult).split("\\.");
+                if (result2[1].equals("bmp")) {
+                    File f = new File(x.pathDireccionImgResult);
+                    Image image = null;
+                    try {
+                        image = ImageIO.read(f);
+                    } catch (IOException ex) {
+                        System.out.println("Error bmp");
+                    }
+                    ImageIcon icon = new ImageIcon(image);
+                    Image imageTest = icon.getImage();
+                    Image newimg = imageTest.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
+
+                    jlab2.setIcon(new ImageIcon(newimg));
+                    jlab2.setHorizontalAlignment(JLabel.CENTER);
+                    jScrollPane2.getViewport().add(jlab2);
+                    auxPath = x.pathDireccionImgResult;
+                }else{
+                    ImageIcon imageIcon = new ImageIcon(x.pathDireccionImgResult);
+                    Image image = imageIcon.getImage();
+                    Image newimg = image.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
+
+                    jlab2.setIcon(new ImageIcon(newimg));
+                    jlab2.setHorizontalAlignment(JLabel.CENTER);
+                    jScrollPane2.getViewport().add(jlab2);
+                    auxPath = x.pathDireccionImgResult;
+                }       
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

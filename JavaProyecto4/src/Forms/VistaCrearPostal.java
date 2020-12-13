@@ -214,7 +214,10 @@ public class VistaCrearPostal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //Botones
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //Botón cargar, para cargar cualquier imagen del disco
         final JFileChooser fc = new JFileChooser();
         if (evt.getSource() == jButton1) {
             
@@ -229,15 +232,22 @@ public class VistaCrearPostal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        boolean result = crearPostal();
-        if (result) {
-            JOptionPane.showMessageDialog(rootPane, "Imagen generada correctamente en la carpeta ImgResults del proyecto");
+        //Botón que corre realiza las verificaciones para crear la postal, y llama a la función crearPostal
+        if (jTextField2.getText().length() < 12 && jTextField3.getText().length() < 6) {
+            boolean result = crearPostal();
+            if (result) {
+                JOptionPane.showMessageDialog(rootPane, "Imagen generada correctamente en la carpeta ImgResults del proyecto");
+            }else
+                JOptionPane.showMessageDialog(rootPane, "No se pudo generar la imagen");
+            limpiarCampos();
         }else
-            JOptionPane.showMessageDialog(rootPane, "No se pudo generar la imagen");
-        limpiarCampos();
+            JOptionPane.showMessageDialog(rootPane, "El texto arriba debe tener menos de 12 caracteres"
+                    + "\nEl texto abajo debe tener menos de 6 caracteres");
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        //Ir a la ventana main
         MainFrame main = new MainFrame();
         main.setVisible(true);
         this.dispose();
@@ -246,6 +256,7 @@ public class VistaCrearPostal extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    //Main
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -279,13 +290,14 @@ public class VistaCrearPostal extends javax.swing.JFrame {
         });
     }
     
-    
-    boolean crearPostal(){
+    //Función de tipo boolean que me crea la postal y me retorna true o false según corresponda en éxito o error
+    private boolean crearPostal(){
+        //Obtener valores de los componentes
         String nombrePostal= jTextField1.getText();
         String textoArriba= jTextField2.getText();
         String textAbajo= jTextField3.getText();
+        //Enviar el tipo de letra
         String tipoLetra = "";
-
         if ("1".equals(jComboBox1.getSelectedItem().toString())) {
              tipoLetra = "back-end\\noto-sans-bold.ttf";
          }
@@ -297,6 +309,7 @@ public class VistaCrearPostal extends javax.swing.JFrame {
          }
         
         String tamannoLetra = jComboBox2.getSelectedItem().toString();
+        //Enviar el tipo de extensión con la que se va a generar la postal
         String extensionPostal = "";
         if ("JPG".equals(jComboBox3.getSelectedItem().toString())) {
              extensionPostal = "1";
@@ -307,10 +320,10 @@ public class VistaCrearPostal extends javax.swing.JFrame {
         if ("BMP".equals(jComboBox3.getSelectedItem().toString())) {
              extensionPostal = "3";
          }
-
         String ubicacionImagen = jTextField4.getText();
-        
         String ubicacionResult = "imgResults\\";
+        
+        //Inicio para correr el ejecutable como backend del proyecto en C
         try {                                  
             Process p=Runtime.getRuntime().exec ("back-end\\"
                     + "Proyecto1Lenguajes.exe"+" \""+ubicacionImagen+
@@ -323,24 +336,28 @@ public class VistaCrearPostal extends javax.swing.JFrame {
             
             String aux = br.readLine();
             
+            if (aux == null) {
+                return false;
+            }
             while (aux!=null)
             {
                 System.out.println (aux);
                 
                 aux = br.readLine();
             }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Error con el cargar");
             return false;
         }
-        
+        //Guardar algunos datos de la imagen original y la postal en una clase.
         String testPathResult = ubicacionResult + nombrePostal + "."+ (jComboBox3.getSelectedItem().toString()).toLowerCase();
         createdImg newImg = new createdImg(nombrePostal, ubicacionImagen, testPathResult);
         resultsImg.add(newImg);
         return true;
     }
-    
-    void limpiarCampos(){
+    //Método para limpiar los campos después de crear la postal
+    private void limpiarCampos(){
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
