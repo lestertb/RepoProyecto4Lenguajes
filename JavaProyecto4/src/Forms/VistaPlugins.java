@@ -6,6 +6,7 @@
 package Forms;
 
 import java.io.File;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import testLoader.JavaClassLoader;
 
@@ -90,11 +91,13 @@ public class VistaPlugins extends javax.swing.JFrame {
 
     //Evento del Combo box que carga los plugins dinámicamente de la carpeta "plugins"
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        jComboBox1.setPopupVisible(false);
         try {
             if (jComboBox1.getSelectedIndex() > 0) {
                 JavaClassLoader javaClassLoader = new JavaClassLoader();
-                javaClassLoader.invokeClassMethod("plugins." + jComboBox1.getSelectedItem().toString(), "loadFile", auxPath);  
+                javaClassLoader.invokeClassMethod(jComboBox1.getSelectedItem().toString(), "loadFile", auxPath);  
                 JOptionPane.showMessageDialog(rootPane, "Aplicando Plugin");
+                this.toBack();
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Ese plugin no existe");
@@ -149,14 +152,16 @@ public class VistaPlugins extends javax.swing.JFrame {
         
         String[] nombrePlugins;
         
-        File f = new File("src\\plugins");
+        File f = new File("build\\classes");
         
         nombrePlugins = f.list();
         String[] result;
         for (String nombre : nombrePlugins) {
-            result = nombre.split("\\.");
-            if (!nombre.equals("Plugin.java")) {
-                jComboBox1.addItem(result[0]);
+            if (nombre.contains(".class")) {
+                result = nombre.split("\\.");
+                if (!nombre.equals("Plugin.class") && !result[0].contains("$")) {
+                    jComboBox1.addItem(result[0]);
+                }
             }
         }
 

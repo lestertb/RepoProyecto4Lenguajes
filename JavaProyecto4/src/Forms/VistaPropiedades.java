@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -164,7 +165,12 @@ public class VistaPropiedades extends javax.swing.JFrame {
 
     //Botón que corre la función para mosstrar las propiedades de la imagen
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        propiedadesImagen();
+        try {
+            propiedadesImagen();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Debe crear una imagen");
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

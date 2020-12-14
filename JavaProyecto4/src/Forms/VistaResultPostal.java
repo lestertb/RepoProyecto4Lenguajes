@@ -222,10 +222,14 @@ public class VistaResultPostal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        //Llama a la vista de propiedades
-        VistaPropiedades vistaPropiedades = new VistaPropiedades(auxPath);
-        vistaPropiedades.setVisible(true);
-        this.dispose();
+        try {
+            VistaPropiedades vistaPropiedades = new VistaPropiedades(auxPath);
+            vistaPropiedades.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Debe crear una imagen, regrese al menú");
+        }
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
