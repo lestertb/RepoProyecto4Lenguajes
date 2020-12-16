@@ -8,6 +8,7 @@
  *
  * @author Lester Trejos
  */
+//Interface que implementan todos los plugin con su método respectivo
 public interface Plugin {
     
      public void loadFile(String path);
