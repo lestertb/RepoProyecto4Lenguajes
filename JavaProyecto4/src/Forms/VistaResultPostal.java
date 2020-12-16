@@ -271,10 +271,13 @@ public class VistaResultPostal extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         String result = "";
         for (createdImg x : VistaCrearPostal.resultsImg) {
-            if (checkbox1.getState()) {
-                result = x.pathDireccionImgResult;
-            }else
-                result = x.pathDireccionImgOriginal;
+            if ((jComboBox1.getSelectedItem().toString()).equals(x.nombrePostalCreada)) {
+                if (checkbox1.getState()) {
+                    result = x.pathDireccionImgResult;
+                }else
+                    result = x.pathDireccionImgOriginal;               
+            }
+
         }
         try {
             VistaPropiedades vistaPropiedades = new VistaPropiedades(result);

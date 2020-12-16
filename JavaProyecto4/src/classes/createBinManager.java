@@ -6,6 +6,7 @@
 package classes;
 
 import Forms.VistaCrearPostal;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -41,9 +42,13 @@ public class createBinManager {
         try {
             ois = new ObjectInputStream(new FileInputStream("file.bin"));
             Object aux = ois.readObject();
-            while (aux!=null) {            
+            while (aux!=null) {  
                  if (aux instanceof createdImg){
-                     VistaCrearPostal.resultsImg.add((createdImg) aux);
+                     File archivo = new File(((createdImg) aux).pathDireccionImgOriginal);
+                     File archivo2 = new File(((createdImg) aux).pathDireccionImgResult);
+                     if (archivo.exists() && archivo2.exists()) {
+                        VistaCrearPostal.resultsImg.add((createdImg) aux);
+                     }
                  }
                 aux = ois.readObject();
             }
