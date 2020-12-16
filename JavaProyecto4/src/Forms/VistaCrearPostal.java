@@ -260,7 +260,7 @@ public class VistaCrearPostal extends javax.swing.JFrame {
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* If Nimbus (introduced in Java SE 6) inputStream not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
@@ -328,22 +328,22 @@ public class VistaCrearPostal extends javax.swing.JFrame {
             Process p=Runtime.getRuntime().exec ("back-end\\"
                     + "Proyecto1Lenguajes.exe"+" \""+ubicacionImagen+
                     "\" "+extensionPostal+" "+nombrePostal+" "+
-                    textoArriba+" "+textAbajo+" "+ "\""+tipoLetra+"\"" +" "+tamannoLetra + " "+ ubicacionResult);
+                    textoArriba+" "+textAbajo+" "+ "\""+tipoLetra+"\"" +" \""+tamannoLetra + "\" "+ ubicacionResult);
             
-            InputStream is = p.getInputStream();
+            InputStream inputStream = p.getInputStream();
             
-            BufferedReader br = new BufferedReader (new InputStreamReader (is));
+            BufferedReader br = new BufferedReader (new InputStreamReader (inputStream));
             
-            String aux = br.readLine();
+            String auxResult = br.readLine();
             
-            if (aux == null) {
+            if (auxResult == null) {
                 return false;
             }
-            while (aux!=null)
+            while (auxResult!=null)
             {
-                System.out.println (aux);
+                System.out.println (auxResult);
                 
-                aux = br.readLine();
+                auxResult = br.readLine();
             }
 
         } catch (Exception e) {
