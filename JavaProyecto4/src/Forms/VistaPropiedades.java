@@ -63,7 +63,7 @@ public class VistaPropiedades extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel4.setText("Resultado");
+        jLabel4.setText("Imagen");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -254,8 +254,8 @@ public class VistaPropiedades extends javax.swing.JFrame {
             String formatted = simpleDateFormat.format( new Date( time.toMillis() ) );
             listModel.addElement("Fecha de creación: " + formatted);  
             String[] result2;
-            result2 = (simg.getGraphics().getColor().toString()).split("r");
-            listModel.addElement("RGB: " + result2[1]+ result2[2]);
+            result2 = (simg.getGraphics().getColor().toString()).split("or");
+            listModel.addElement("RGB: " + result2[1]);
             
         } catch (Exception e) {
             System.out.println("error");

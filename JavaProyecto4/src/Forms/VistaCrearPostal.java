@@ -233,16 +233,20 @@ public class VistaCrearPostal extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Botón que corre realiza las verificaciones para crear la postal, y llama a la función crearPostal
-        if (jTextField2.getText().length() < 12 && jTextField3.getText().length() < 6) {
-            boolean result = crearPostal();
-            if (result) {
-                JOptionPane.showMessageDialog(rootPane, "Imagen generada correctamente en la carpeta ImgResults del proyecto");
+        if (!jTextField1.getText().isEmpty() && !jTextField4.getText().isEmpty()) {
+            if (jTextField2.getText().length() < 12 && jTextField3.getText().length() < 6) {
+                boolean result = crearPostal();
+                if (result) {
+                    JOptionPane.showMessageDialog(rootPane, "Imagen generada correctamente en la carpeta ImgResults del proyecto");
+                }else
+                    JOptionPane.showMessageDialog(rootPane, "No se pudo generar la imagen");
+                limpiarCampos();
             }else
-                JOptionPane.showMessageDialog(rootPane, "No se pudo generar la imagen");
-            limpiarCampos();
+                JOptionPane.showMessageDialog(rootPane, "El texto arriba debe tener menos de 12 caracteres"
+                        + "\nEl texto abajo debe tener menos de 6 caracteres");           
         }else
-            JOptionPane.showMessageDialog(rootPane, "El texto arriba debe tener menos de 12 caracteres"
-                    + "\nEl texto abajo debe tener menos de 6 caracteres");
+            JOptionPane.showMessageDialog(this, "El nombre o la ubicación están vacíos", "Error!", JOptionPane.ERROR_MESSAGE);  
+
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -292,6 +296,14 @@ public class VistaCrearPostal extends javax.swing.JFrame {
     
     //Función de tipo boolean que me crea la postal y me retorna true o false según corresponda en éxito o error
     private boolean crearPostal(){
+        
+        for (createdImg img : resultsImg) {
+            if (img.nombrePostalCreada.equals(jTextField1.getText())) {
+                JOptionPane.showMessageDialog(rootPane, "Ya existe una postal con ese nombre, intente con otro");
+                return false;
+            }
+        }
+        
         //Obtener valores de los componentes
         String nombrePostal= jTextField1.getText();
         String textoArriba= jTextField2.getText();
@@ -354,6 +366,18 @@ public class VistaCrearPostal extends javax.swing.JFrame {
         String testPathResult = ubicacionResult + nombrePostal + "."+ (jComboBox3.getSelectedItem().toString()).toLowerCase();
         createdImg newImg = new createdImg(nombrePostal, ubicacionImagen, testPathResult);
         resultsImg.add(newImg);
+        createBinManager bin = new createBinManager();
+        int test = 0;
+        for (int i = 0; i < resultsImg.size(); i++) {
+            test = 1;
+            if (i == 0) {
+                bin.writeObject(resultsImg.get(i), 1);
+            }
+            bin.writeObject(resultsImg.get(i), 2);
+        }
+        if (test == 1) {
+            bin.writeObject(newImg, 3);
+        }
         return true;
     }
     //Método para limpiar los campos después de crear la postal
