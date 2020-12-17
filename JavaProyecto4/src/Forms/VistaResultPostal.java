@@ -30,7 +30,7 @@ public class VistaResultPostal extends javax.swing.JFrame {
         initComponents();
         //Se cargan las imagenes de la clase, en el comboBox
         for (createdImg x : VistaCrearPostal.resultsImg) {
-            jComboBox1.addItem(x.nombrePostalCreada);
+            jComboBox1.addItem(x.getNombrePostalCreada());
         }
     }
 
@@ -271,11 +271,11 @@ public class VistaResultPostal extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         String result = "";
         for (createdImg x : VistaCrearPostal.resultsImg) {
-            if ((jComboBox1.getSelectedItem().toString()).equals(x.nombrePostalCreada)) {
+            if ((jComboBox1.getSelectedItem().toString()).equals(x.getNombrePostalCreada())) {
                 if (checkbox1.getState()) {
-                    result = x.pathDireccionImgResult;
+                    result = x.getPathDireccionImgResult();
                 }else
-                    result = x.pathDireccionImgOriginal;               
+                    result = x.getPathDireccionImgOriginal();               
             }
 
         }
@@ -292,8 +292,8 @@ public class VistaResultPostal extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         
         for (createdImg x : VistaCrearPostal.resultsImg) {
-            if (x.nombrePostalCreada.equals(jComboBox1.getSelectedItem().toString())) {
-                abrirImagen(x.pathDireccionImgOriginal);
+            if (x.getNombrePostalCreada().equals(jComboBox1.getSelectedItem().toString())) {
+                abrirImagen(x.getPathDireccionImgOriginal());
             }
         }
 
@@ -301,8 +301,8 @@ public class VistaResultPostal extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         for (createdImg x : VistaCrearPostal.resultsImg) {
-            if (x.nombrePostalCreada.equals(jComboBox1.getSelectedItem().toString())) {
-                abrirImagen(x.pathDireccionImgResult);
+            if (x.getNombrePostalCreada().equals(jComboBox1.getSelectedItem().toString())) {
+                abrirImagen(x.getPathDireccionImgResult());
             }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -349,11 +349,11 @@ public class VistaResultPostal extends javax.swing.JFrame {
     //Método que carga las imagenes(original y postal)
     private void cargarImagenes(){
         for (createdImg x : VistaCrearPostal.resultsImg) {
-            if (x.nombrePostalCreada.equals(jComboBox1.getSelectedItem().toString())) {
+            if (x.getNombrePostalCreada().equals(jComboBox1.getSelectedItem().toString())) {
                 // Mostrar imagen Original
-                String[] result= (x.pathDireccionImgOriginal).split("\\.");
+                String[] result= (x.getPathDireccionImgOriginal()).split("\\.");
                 if (result[1].equals("bmp")) {
-                    File f = new File(x.pathDireccionImgOriginal);
+                    File f = new File(x.getPathDireccionImgOriginal());
                     Image image = null;
                     try {
                         image = ImageIO.read(f);
@@ -368,7 +368,7 @@ public class VistaResultPostal extends javax.swing.JFrame {
                     jlab1.setHorizontalAlignment(JLabel.CENTER);
                     jScrollPane1.getViewport().add(jlab1);
                 }else{
-                    ImageIcon imageIcon = new ImageIcon(x.pathDireccionImgOriginal);
+                    ImageIcon imageIcon = new ImageIcon(x.getPathDireccionImgOriginal());
                     Image image = imageIcon.getImage();
                     Image newimg = image.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
 
@@ -377,9 +377,9 @@ public class VistaResultPostal extends javax.swing.JFrame {
                     jScrollPane1.getViewport().add(jlab1);
                 }               
                 //Mostrar Postal (Result)
-                String[] result2= (x.pathDireccionImgResult).split("\\.");
+                String[] result2= (x.getPathDireccionImgResult()).split("\\.");
                 if (result2[1].equals("bmp")) {
-                    File f = new File(x.pathDireccionImgResult);
+                    File f = new File(x.getPathDireccionImgResult());
                     Image image = null;
                     try {
                         image = ImageIO.read(f);
@@ -393,16 +393,16 @@ public class VistaResultPostal extends javax.swing.JFrame {
                     jlab2.setIcon(new ImageIcon(newimg));
                     jlab2.setHorizontalAlignment(JLabel.CENTER);
                     jScrollPane2.getViewport().add(jlab2);
-                    auxPath = x.pathDireccionImgResult;
+                    auxPath = x.getPathDireccionImgResult();
                 }else{
-                    ImageIcon imageIcon = new ImageIcon(x.pathDireccionImgResult);
+                    ImageIcon imageIcon = new ImageIcon(x.getPathDireccionImgResult());
                     Image image = imageIcon.getImage();
                     Image newimg = image.getScaledInstance(245, 170,  java.awt.Image.SCALE_SMOOTH);
 
                     jlab2.setIcon(new ImageIcon(newimg));
                     jlab2.setHorizontalAlignment(JLabel.CENTER);
                     jScrollPane2.getViewport().add(jlab2);
-                    auxPath = x.pathDireccionImgResult;
+                    auxPath = x.getPathDireccionImgResult();
                 }       
             }
         }

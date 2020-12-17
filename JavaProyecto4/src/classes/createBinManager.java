@@ -17,11 +17,11 @@ import java.io.ObjectOutputStream;
  * @author Lester Trejos
  */
 public class createBinManager {
-    
+    //Variables
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
     
-    
+    //Método para escribir en el archivo binario
     public void writeObject (Object object, int val) {
         try {
             if (val == 1) {
@@ -37,7 +37,7 @@ public class createBinManager {
             System.out.println(e.getMessage());
         }
     }
-    
+    //Método para leer en el archivo binario
     public void readObject () {  
         try {
             ois = new ObjectInputStream(new FileInputStream("file.bin"));

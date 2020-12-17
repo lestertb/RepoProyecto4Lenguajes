@@ -298,7 +298,7 @@ public class VistaCrearPostal extends javax.swing.JFrame {
     private boolean crearPostal(){
         
         for (createdImg img : resultsImg) {
-            if (img.nombrePostalCreada.equals(jTextField1.getText())) {
+            if (img.getNombrePostalCreada().equals(jTextField1.getText())) {
                 JOptionPane.showMessageDialog(rootPane, "Ya existe una postal con ese nombre, intente con otro");
                 return false;
             }
